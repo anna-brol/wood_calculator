@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Kalkulator połączeń ciesielskich</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zilla+Slab+Highlight:wght@700&family=Zilla+Slab:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <script type="module">
+      import { LaTeXJSComponent } from "https://cdn.jsdelivr.net/npm/latex.js/dist/latex.mjs";
+      customElements.define("latex-js", LaTeXJSComponent);
+    </script> -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <p>DANE:</p>
+      <label for="wood">Klasa drewna konstrukcyjnego litego:</label>
+
+      <select name="wood_class" id="wood">
+        <option value="C14">C14</option>
+        <option value="C16">C16</option>
+        <option value="C18">C18</option>
+        <option value="C20">C20</option>
+        <option value="C22">C22</option>
+        <option value="C24">C24</option>
+        <option value="C27">C27</option>
+        <option value="C30">C30</option>
+        <option value="C35">C35</option>
+        <option value="C40">C40</option>
+        <option value="C45">C45</option>
+        <option value="C50">C50</option>
+      </select>
+
+      <table>
+        <tr class="header">
+          <th colspan="6">Wytrzymałość [MPa]</th>
+        </tr>
+        <tr class="header">
+          <th>Zginanie</th>
+          <th>Rozciąganie wzdłuż włókien</th>
+          <th>Rozciąganie w poprzek włókien</th>
+          <th>Ściskanie wzdłuż włókien</th>
+          <th>Ściskanie w poprzek włókien</th>
+          <th>Ściananie</th>
+        </tr>
+        <tr class="white">
+          <th>f<sub>m,k</sub></th>
+          <th>f<sub>t,0,k</sub></th>
+          <th>f<sub>vt,90,k</sub></th>
+          <th>f<sub>c,0,k</sub></th>
+          <th>f<sub>c,90,k</sub></th>
+          <th>f<sub>v,k</sub></th>
+        </tr>
+        <tr class="white">
+          <th><span id="fmk">14</span></th>
+          <th><span id="ft0k">8</span></th>
+          <th><span id="fvt90k">0.4</span></th>
+          <th><span id="fc0k">16</span></th>
+          <th><span id="fc90k">2</span></th>
+          <th><span id="fvk">1.7</span></th>
+        </tr>
+      </table>
+
+      <p>Współczynnik k<sub>mod</sub></p>
+      <label for="kmod">Klasa użytkowania:</label>
+      <select name="usage_class" id="usability">
+        <option value="use_1i2">1 i 2</option>
+        <option value="use_3">3</option>
+      </select>
+
+      <label for="kmod">Klasa trwania obciążenia:</label>
+      <select name="duration_class" id="durability">
+        <option value="dur_1">1 - stałe</option>
+        <option value="dur_2">2 - długotrwałe</option>
+        <option value="dur_3">3 - średniotrwałe</option>
+        <option value="dur_4">4 - krótkotrwałe</option>
+        <option value="dur_5">5 - chwilowe</option>
+      </select>
+      <br />
+      <span>k<sub>mod</sub> = </span><span id="kmod_value">0.6</span>
+
+      <p></p>
+      <label for="Nd">Siła obliczeniowa N<sub>d</sub>:</label>
+      <input type="number" name="Nd" id="Nd" />
+
+      <label for="alpha">&#945 :</label>
+      <input type="number" name="alpha" id="alpha" />
+
+      <label for="b">b :</label>
+      <input type="number" name="b" id="b" />
+
+      <label for="h">h :</label>
+      <input type="number" name="h" id="h" />
+      <p id="fmd">
+        $$f_{m,d}=\frac{f_{m,k}*k_{mod}} {\displaystyle 1.3}$$
+      </p>
+      <div class="latex">
+        $$f_{t,0,d}=\frac{f_{t,0,k}*k_{mod}} {\displaystyle 1.3}$$
+        $$f_{v,d}=\frac{f_{v,k}*k_{mod}} {\displaystyle 1.3}$$
+        $$f_{c,90,d}=\frac{f_{c,90,k}*k_{mod}} {\displaystyle 1.3}$$
+        $$f_{c,0,d}=\frac{f_{c,0,k}*k_{mod}} {\displaystyle 1.3}$$
+        NOŚNOŚĆ NA DOCISK:
+        $$f_{c,\alpha,d}=\frac{f_{c,0,d}} {\displaystyle
+        \frac{f_{c,0,d}}{\displaystyle\ k_{c,90}*f_{c,90,d}} *
+        (sin(\alpha))^2+(cos(\alpha))^2} $$
+      </div>
+
+    </div>
+    <script src="script.js" async defer></script>
+  </body>
+</html>
