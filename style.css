@@ -23,7 +23,13 @@ td {
   background-color: rgb(247, 247, 247);
 }
 
-latex-js {
-  display: inline-block;
+.latex {
+  display: flex;
+  justify-content: left;
   margin-right: 5px;
+}
+
+.kom {
+  font-size: 10px;
+  color: rgb(197, 107, 22);
 }

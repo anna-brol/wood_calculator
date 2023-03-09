@@ -16,7 +16,10 @@
       customElements.define("latex-js", LaTeXJSComponent);
     </script> -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script
+      id="MathJax-script"
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
   </head>
 
   <body>
@@ -41,7 +44,7 @@
 
       <table>
         <tr class="header">
-          <th colspan="6">Wytrzymałość [MPa]</th>
+          <th colspan="6">Wytrzymałość [MPa] - wartości charakterystyczne</th>
         </tr>
         <tr class="header">
           <th>Zginanie</th>
@@ -91,7 +94,7 @@
       <label for="Nd">Siła obliczeniowa N<sub>d</sub>:</label>
       <input type="number" name="Nd" id="Nd" />
 
-      <label for="alpha">&#945 :</label>
+      <label for="alpha">&alpha; :</label>
       <input type="number" name="alpha" id="alpha" />
 
       <label for="b">b :</label>
@@ -99,21 +102,100 @@
 
       <label for="h">h :</label>
       <input type="number" name="h" id="h" />
-      <p id="fmd">
+
+      <label for="s">s :</label>
+      <input type="number" name="s" id="s" />
+
+      <p>NOŚNOŚĆ ŚRUBY:</p>
+      <label for="fub">f<sub>ub</sub>:</label>
+      <input type="number" name="fub" id="fub" />
+      <label for="as">A<sub>s</sub>:</label>
+      <input type="number" name="as" id="as" />
+      <button>OBLICZ</button>
+      <p class="kom">
+        ** Te dane są dla śruby M10 - trzeba poszukać czy nie trzeba zrobić
+        jak wyżej comboboxa. NAJLEPIEJ PRZENIEŚĆ TO WYŻEJ **
+      <!-- <div class="latex" id="fmd">
         $$f_{m,d}=\frac{f_{m,k}*k_{mod}} {\displaystyle 1.3}$$
-      </p>
+      </div>
       <div class="latex">
         $$f_{t,0,d}=\frac{f_{t,0,k}*k_{mod}} {\displaystyle 1.3}$$
+      </div>
+      <div class="latex">
         $$f_{v,d}=\frac{f_{v,k}*k_{mod}} {\displaystyle 1.3}$$
+      </div>
+      <div class="latex">
         $$f_{c,90,d}=\frac{f_{c,90,k}*k_{mod}} {\displaystyle 1.3}$$
+      </div>
+      <div class="latex">
         $$f_{c,0,d}=\frac{f_{c,0,k}*k_{mod}} {\displaystyle 1.3}$$
-        NOŚNOŚĆ NA DOCISK:
-        $$f_{c,\alpha,d}=\frac{f_{c,0,d}} {\displaystyle
-        \frac{f_{c,0,d}}{\displaystyle\ k_{c,90}*f_{c,90,d}} *
-        (sin(\alpha))^2+(cos(\alpha))^2} $$
+      </div> -->
+      <div class="nos_docisk">
+        <p>NOŚNOŚĆ NA DOCISK:</p>
+        <!-- <div class="latex">
+          $$f_{c,\alpha,d}=\frac{f_{c,0,d}} {\displaystyle
+          \frac{f_{c,0,d}}{\displaystyle\ k_{c,90}*f_{c,90,d}} *
+          (sin(\alpha))^2+(cos(\alpha))^2} $$
+        </div> -->
+        <div class="latex">
+          <!-- $$A_{n}=\frac{N_{d}} {\displaystyle f_{c,\alpha,d}} $$ -->
+        </div>
+        <p class="kom">** TU PRZYJMUJEMY S=40MM TRZA TO SPRAWDZIĆ **</p>
       </div>
 
+      <div class="warunek_docisk">
+        <p>WARUNEK NOŚNOŚCI NA DOCISK:</p>
+        <div class="latex">
+          <!-- $$\sigma_{c,\alpha,d}=\frac{N_{d}*cos(\alpha)} {\displaystyle {b*s}}$$ -->
+        </div>
+        <div class="latex">
+          <!-- $$\frac{\sigma_{c,\alpha,d}} {\displaystyle {f_{c,\alpha,d}}}$$ -->
+        </div>
+        <p class="kom">
+          ** Tu sprawdzamy warunek. Chyba porównujemy czy jest mniejszy niż 1
+          ale trza sprawdzić **
+        </p>
+      </div>
+
+      <div class="nos_scinanie">
+        <p>NOŚNOŚĆ NA ŚCINANIE:</p>
+        <div class="latex">
+          <!-- $$l_{1,v}={s*tg(\alpha)}$$ -->
+        </div>
+        <div class="latex">
+          <!-- $$A_{v}=\frac{N_{d}*cos(\alpha)} {\displaystyle {f_{v,d}}}$$ -->
+        </div>
+        <div class="latex">
+          <!-- $$l_{v}=\frac{A_{v}} {\displaystyle {b}}$$ -->
+        </div>
+        <div class="latex">
+          <!-- $$l_{2,v'}={l_{v}-l_{1,v}}$$ -->
+        </div>
+        <p class="kom">** Przyjęto l<sub>2,v</sub>=150mm Whyyy? **</p>
+      </div>
+
+      <div class="warunek_scinanie">
+        <p>WARUNEK NOŚNOŚCI NA ŚCINANIE:</p>
+        <div class="latex">
+          <!-- $$\tau_{Rd}=\frac{N_{d}*cos(\alpha)} {\displaystyle {A_{v}}}$$ -->
+        </div>
+        <div class="latex">
+          <!-- $$\tau_{Ed}=\frac{N_{d}*cos(\alpha)} {\displaystyle
+          {b*(l_{2,v}+l_{1,v})}}$$ -->
+        </div>
+        <div class="latex">
+          <!-- $$\frac{\tau_{Ed}} {\displaystyle {\tau_{Rd}}}$$ -->
+        </div>
+        <p class="kom">
+          ** Tu sprawdzamy warunek. Chyba porównujemy czy jest mniejszy niż 1
+          ale trza sprawdzić **
+        </p>
+      </div>
+      <div class="warunek_scinanie">  
+
+        </p>
+      </div>
+      <script src="script.js" async defer></script>
     </div>
-    <script src="script.js" async defer></script>
   </body>
 </html>
