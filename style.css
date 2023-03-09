@@ -27,6 +27,7 @@ td {
   display: flex;
   justify-content: left;
   margin-right: 5px;
+  font-size: 20px;
 }
 
 .kom {
