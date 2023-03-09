@@ -188,16 +188,16 @@ function calc_fcAd(fc0d, kc90, fc90d, alpha){
 function calc_an(nd, fcAd){
   return nd / fcAd;
 }
-function calc_sigmacAd(nd, b, s){
-  return nd * Math.cos(alpha*Math.PI/180) / b*s;
+function calc_sigmacAd(nd, b, s, alpha){
+  return (nd * Math.cos(alpha*Math.PI/180)) / (b*s);
 }
-function calc_sigmaCompare(sigma, fcAd){
-  return sigma / fcAd;
+function calc_sigmaCompare(sigmacAd, fcAd){
+  return sigmacAd / fcAd;
 }
-function calc_l1v(s){
+function calc_l1v(s, alpha){
   return s * Math.tan(alpha*Math.PI/180);
 }
-function calc_av(nd, fvd){
+function calc_av(nd, fvd, alpha){
   return nd * Math.cos(alpha*Math.PI/180) / fvd;
 }
 function calc_lv(av, b){
@@ -206,20 +206,20 @@ function calc_lv(av, b){
 function calc_l2v1(lv, l1v){
   return lv-l1v;
 }
-function calc_tauRd(nd, av){
+function calc_tauRd(nd, av, alpha){
   return nd * Math.cos(alpha*Math.PI/180) / av;
 }
-function calc_tauEd(nd, b, l2v, l1v){
-  return nd * Math.cos(alpha*Math.PI/180) / b * (l2v + l1v);
+function calc_tauEd(nd, b, l2v, l1v, alpha){
+  return (nd * Math.cos(alpha*Math.PI/180)) / (b * (l2v + l1v));
 }
 function calc_tauCompare(tauEd, tauRd){
   return tauEd / tauRd;
 }
-function calc_asmin(nd, fub){
+function calc_asmin(nd, fub, alpha){
   x = 60 - alpha;
   return (1.25 * nd * Math.tan(x*Math.PI/180))/(0.9 * fub);
 }
-function calc_ntd(nd){
+function calc_ntd(nd, alpha){
   return nd * Math.cos(alpha*Math.PI/180);
 }
 function calc_h2(h, s){
@@ -272,9 +272,10 @@ let ft0d_result = 0;
 let fvd_result = 0;
 let fc90d_result = 0;
 let fc0d_result = 0;
+let fcAd_result = 0;
 let an_result = 0;
 let sigmacAd_result = 0;
-let sigmacCompare_result = 0;
+let sigmaCompare_result = 0;
 let l1v_result = 0;
 let av_result = 0;
 let lv_result = 0;
@@ -282,16 +283,16 @@ let l2v1_result = 0;
 let tauRd_result = 0;
 let tauEd_result = 0;
 let tauCompare_result = 0;
-let calc_asmin_result = 0;
-let calc_ntd_result = 0;
-let calc_h2_result = 0;
-let calc_an1_result = 0;
-let calc_e_result = 0;
-let calc_m_result = 0;
-let calc_sigmat_result = 0;
-let calc_wy_result = 0;
-let calc_sigmam_result = 0;
-let calc_condition_result = 0;
+let asmin_result = 0;
+let ntd_result = 0;
+let h2_result = 0;
+let an1_result = 0;
+let e_result = 0;
+let m_result = 0;
+let sigmat_result = 0;
+let wy_result = 0;
+let sigmam_result = 0;
+let condition_result = 0;
 let l2v_value = 150;
 
 calculate_button.addEventListener('click', () => {
@@ -310,159 +311,111 @@ calculate_button.addEventListener('click', () => {
   fc90d_result = calc_fc90d(fc90k_value, kmod_value);
   fc0d_result = calc_fc0d(fc0k_value, kmod_value);
   fcAd_result = calc_fcAd(fc0d_result, kc90_value, fc90d_result, alpha_value);
-
-
-
+  an_result = calc_an(nd_value, fcAd_result);
+  sigmacAd_result = calc_sigmacAd(nd_value, b_value, s_value, alpha_value);
+  sigmaCompare_result = calc_sigmaCompare(sigmacAd_result, fcAd_result);
+  l1v_result = calc_l1v(s_value, alpha_value);
+  av_result = calc_av(nd_value, fvd_result, alpha_value);
+  lv_result = calc_lv(av_result, b_value);
+  l2v1_result = calc_l2v1(lv_result, l1v_result);
+  tauRd_result = calc_tauRd(nd_value, av_result, alpha_value);
+  tauEd_result = calc_tauEd(nd_value, b_value, l2v_value, l1v_result, alpha_value);
+  tauCompare_result = calc_tauCompare(tauEd_result, tauRd_result);
+  asmin_result = calc_asmin(nd_value, fub_value, alpha_value);
+  ntd_result = calc_ntd(nd_value, alpha_value);
+  h2_result = calc_h2(h_value, s_value);
+  an1_result = calc_an1(h2_result, b_value);
+  e_result = calc_e(h_value, h2_result);
+  m_result = calc_m(ntd_result, an1_result);
+  sigmat_result = calc_sigmat(ntd_result, an1_result);
+  wy_result = calc_wy(b_value, h2_result);
+  sigmam_result = calc_sigmam(m_result, wy_result);
+  condition_result = calc_condition(sigmat_result, ft0d_result, sigmam_result, fmd_result);
 
   update_latex();
 })
 
 
-
-
-// latex part
-
-// var math = MathJax.tex2chtml("\\frac{1}{" + k + "}");
-// var math = MathJax.tex2chtml(
-//   "\\frac{\\tau_{Ed}} {\\displaystyle {\\tau_{Rd}}}= "
-// );
-
-// var math = MathJax.tex2chtml(
-//   "\\frac{\\tau_{Ed}}{\\displaystyle{\\tau_{Rd}}} = \\frac{" + tau + "}{\\displaystyle{" + tej + "}}"
-// );
-
-// var div = document.createElement("div");
-// div.appendChild(math);
-// document.body.appendChild(div);
-
-
-// fmd
+// calculation
 const latex_fmd_element = document.getElementById("latex_fmd");
 const latex_ft0d_element = document.getElementById("latex_ft0d");
 const latex_fvd_element = document.getElementById("latex_fvd");
 const latex_fc90d_element = document.getElementById("latex_fc90d");
 const latex_fc0d_element = document.getElementById("latex_fc0d");
+// nośność na docisk
 const latex_fcAd_element = document.getElementById("latex_fcAd");
+const latex_an_element = document.getElementById("latex_an");
+// Warunek nośności na docisk
+const latex_sigmacAd_element = document.getElementById("latex_sigmacAd");
+const latex_sigmaCompare_element = document.getElementById("latex_sigmaCompare");
 
+// Nośność na ścinanie
+const latex_l1v_element = document.getElementById("latex_l1v");
+const latex_av_element = document.getElementById("latex_av");
+const latex_lv_element = document.getElementById("latex_lv");
+const latex_l2v1_element = document.getElementById("latex_l2v1");
+
+// Warunek nośności na ścinanie
+const latex_tauRd_element = document.getElementById("latex_tauRd");
+const latex_tauEd_element = document.getElementById("latex_tauEd");
+const latex_tauCompare_element = document.getElementById
+("latex_tauCompare");
+// Minimalna wymagana powierzchnia śruby
+const latex_asmin_element = document.getElementById("latex_asmin");
+const latex_ntd_element = document.getElementById("latex_ntd");
+const latex_h2_element = document.getElementById("latex_h2");
+const latex_an1_element = document.getElementById("latex_an1");
+const latex_e_element = document.getElementById("latex_e");
+const latex_m_element = document.getElementById("latex_m");
+const latex_sigmat_element = document.getElementById("latex_sigmat");
+const latex_wy_element = document.getElementById("latex_wy");
+const latex_sigmam_element = document.getElementById("latex_sigmam");
+// Warunek nośności
+const latex_condition_element = document.getElementById("latex_condition");
 
 
 function update_latex() {
-  //fmd
+  // calculation
   latex_fmd_element.innerHTML = "$$ f_{m,d}=\\frac{f_{m,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fmk_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fmd_result + "}  $$";
-  //ft0d
+
   latex_ft0d_element.innerHTML = "$$ f_{t,0,d}=\\frac{f_{t,0,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + ft0k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + ft0d_result + "} $$";
-  //fvd
+ 
   latex_fvd_element.innerHTML = "$$ f_{v,d}=\\frac{f_{v,d}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fvk_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fvd_result + "} $$";
-  //fc90d
+ 
   latex_fc90d_element.innerHTML = "$$ f_{c,90,d}=\\frac{f_{c,90,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fc90k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fc90d_result + "} $$";
-  //fc0d
+ 
   latex_fc0d_element.innerHTML = "$$ f_{c,0,d}=\\frac{f_{c,0,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fc0k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fc0d_result + "} $$";
-  //fcAd
+
+  // nośność na docisk
   latex_fcAd_element.innerHTML = "$$ f_{c,\\alpha,d}=\\frac{f_{c,0,d}}{\\displaystyle\\frac{f_{c,0,d}}{k_{c,90}*f_{c,90,d}}*(\\sin(\\alpha))^2+(\\cos(\\alpha))^2} = \\frac{"+fc0d_result+"}{\\displaystyle({"+fc0d_result+"}/({"+kc90_value+"}*{"+fc90d_result+"}))*(\\sin("+alpha_value+"))^2+(\\cos("+alpha_value+"))^2}= {" + fcAd_result + "} $$";
 
-  
+  latex_an_element.innerHTML = "$$ A_{n}=\\frac{N_{d}} {\\displaystyle f_{c,\\alpha,d}} = \\frac{" + nd_value +"} {\\displaystyle {" + fcAd_result + "}} = {" + an_result + "} $$";
+
+  // Warunek nośności na docisk
+  latex_sigmacAd_element.innerHTML = "$$ \\sigma_{c,\\alpha,d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*s}} =\\frac{" + nd_value + "*cos(" + alpha_value + ")} {\\displaystyle {" + b_value + "* " + s_value + "}} = {" + sigmacAd_result + "}$$";
+
+  latex_sigmaCompare_element.innerHTML = "$$ \\frac{\\sigma_{c,\\alpha,d}} {\\displaystyle {f_{c,\\alpha,d}}} = \\frac{" + sigmacAd_result + "} {\\displaystyle {" + fcAd_result + "}} ={" + sigmaCompare_result + "}$$";
+
+// Nośność na ścinanie
+  latex_l1v_element.innerHTML = "$$ l_{1,v}={s*tg(\\alpha)} = {" + s_value + "*tg(" + alpha_value + ")} = {"+ l1v_result + "} $$";
+
+  latex_av_element.innerHTML = "$$ A_{v}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {f_{v,d}}} = \\frac{"+ nd_value + "*cos("+ alpha_value+")} {\\displaystyle {"+fvd_result+"}} = {"+ av_result + "} $$";
+
+  latex_lv_element.innerHTML = "$$ l_{v}=\\frac{A_{v}} {\\displaystyle {b}} = \\frac{"+av_result+"} {\\displaystyle {"+b_value+"}} = {"+ lv_result + "} $$";
+
+  latex_l2v1_element.innerHTML = "$$ l_{2,v'}={l_{v}-l_{1,v}} = {"+lv_result+"-"+l1v_result+"} = {"+ l2v1_result + "} $$";
+
+// Warunek nośności na ścinanie
+  latex_tauRd_element.innerHTML = "$$ \\tau_{Rd}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {A_{v}}} = \\frac{"+nd_value+"*cos("+alpha_value+")} {\\displaystyle {"+av_result+"}} = {"+ tauRd_result + "}  $$";
+
+  latex_tauEd_element.innerHTML = "$$ \\tau_{Ed}= \\frac{N_{d}*cos(\\alpha)} {\\displaystyle{b*(l_{2,v}+l_{1,v})}} = \\frac{"+nd_value+"*cos("+alpha_value+")} {\\displaystyle{"+b_value+"*("+l2v_value+"+"+l1v_result+")}} = {"+ tauEd_result + "}  $$";
+
+  latex_tauCompare_element.innerHTML = "$$ \\frac{\\tau_{Ed}} {\\displaystyle {\\tau_{Rd}}} = \\frac{"+tauEd_result+"} {\\displaystyle {"+tauRd_result+"}} = {"+ tauCompare_result + "}  $$";
+
   MathJax.typeset();
 }
 
 
-// // fcAd
-// var fcAd_equation = MathJax.tex2chtml(
-//   "f_{c,\\alpha,d}=\\frac{f_{c,0,d}}{\\displaystyle\\frac{f_{c,0,d}}{k_{c,90}*f_{c,90,d}}*(\\sin(\\alpha))^2+(\\cos(\\alpha))^2} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(fcAd_equation);
-// document.body.appendChild(div);
-
-// // An
-// var An_equation = MathJax.tex2chtml(
-//   "A_{n}=\\frac{N_{d}} {\\displaystyle f_{c,\\alpha,d}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(An_equation);
-// document.body.appendChild(div);
-
-// // Sigma
-// var sigma_equation = MathJax.tex2chtml(
-//   "\\sigma_{c,\\alpha,d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*s}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(sigma_equation);
-// document.body.appendChild(div);
-
-// // Sigma_porownanie
-// var sigmaComper_equation = MathJax.tex2chtml(
-//   "\\frac{\\sigma_{c,\\alpha,d}} {\\displaystyle {f_{c,\\alpha,d}}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(sigmaComper_equation);
-// document.body.appendChild(div);
-
-// //l1v
-// var l1v_equation = MathJax.tex2chtml(
-//   "l_{1,v}={s*tg(\\alpha)} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(l1v_equation);
-// document.body.appendChild(div);
-
-// // Av
-// var Av_equation = MathJax.tex2chtml(
-//   "A_{v}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {f_{v,d}}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(Av_equation);
-// document.body.appendChild(div);
-
-// // lv
-// var lv_equation = MathJax.tex2chtml(
-//   "l_{v}=\\frac{A_{v}} {\\displaystyle {b}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(lv_equation);
-// document.body.appendChild(div);
-
-// //l2v'
-// var l2v_equation = MathJax.tex2chtml(
-//   "l_{2,v'}={l_{v}-l_{1,v}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(l2v_equation);
-// document.body.appendChild(div);
-
-// //tauRd
-// var tauRd_equation = MathJax.tex2chtml(
-//   "\\tau_{Rd}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {A_{v}}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(tauRd_equation);
-// document.body.appendChild(div);
-
-// //tauEd
-// var tauEd_equation = MathJax.tex2chtml(
-//   "\\tau_{Ed}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle{b*(l_{2,v}+l_{1,v})}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(tauEd_equation);
-// document.body.appendChild(div);
-
-// //tauEd/tauRd
-// var tauCompare_equation = MathJax.tex2chtml(
-//   "\\frac{\\tau_{Ed}} {\\displaystyle {\\tau_{Rd}}} = "
-//   );
-
-// var div = document.createElement("div");
-// div.appendChild(tauCompare_equation);
-// document.body.appendChild(div);
 
 
 
