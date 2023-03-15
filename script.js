@@ -207,10 +207,14 @@ function calc_l2v1(lv, l1v){
   return lv-l1v;
 }
 function calc_tauRd(nd, av, alpha){
-  return nd * Math.cos(alpha*Math.PI/180) / av;
+  x=(alpha*Math.PI/180);
+  return nd * Math.cos(x) / av;
 }
 function calc_tauEd(nd, b, l2v, l1v, alpha){
-  return (nd * Math.cos(alpha*Math.PI/180)) / (b * (l2v + l1v));
+  x=(alpha*Math.PI/180);
+ 
+  return ((nd* (Math.cos(x)))/ (b * (l2v + l1v)));
+
 }
 function calc_tauCompare(tauEd, tauRd){
   return tauEd / tauRd;
@@ -229,7 +233,7 @@ function calc_an1(h2, b){
   return h2 * ((b - 45));
 }
 function calc_e(h, h2){
-  return h - h2 / 2;
+  return (h - h2) / 2;
 }
 function calc_m(ntd, e){
   return ntd * e;
@@ -238,7 +242,7 @@ function calc_sigmat(ntd, an1){
   return ntd / an1;
 }
 function calc_wy(b, h2){
-  return ((b-45)*h2^2)/6;
+  return ((b-45)*h2**2)/6;
 }
 function calc_sigmam(m, wy){
   return m / wy;
@@ -326,7 +330,7 @@ calculate_button.addEventListener('click', () => {
   h2_result = calc_h2(h_value, s_value);
   an1_result = calc_an1(h2_result, b_value);
   e_result = calc_e(h_value, h2_result);
-  m_result = calc_m(ntd_result, an1_result);
+  m_result = calc_m(ntd_result, e_result);
   sigmat_result = calc_sigmat(ntd_result, an1_result);
   wy_result = calc_wy(b_value, h2_result);
   sigmam_result = calc_sigmam(m_result, wy_result);
@@ -334,7 +338,6 @@ calculate_button.addEventListener('click', () => {
 
   update_latex();
 })
-
 
 // calculation
 const latex_fmd_element = document.getElementById("latex_fmd");
@@ -376,51 +379,64 @@ const latex_condition_element = document.getElementById("latex_condition");
 
 function update_latex() {
   // calculation
-  latex_fmd_element.innerHTML = "$$ f_{m,d}=\\frac{f_{m,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fmk_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fmd_result + "}  $$";
+  latex_fmd_element.innerHTML = "$$ f_{m,d}=\\frac{f_{m,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fmk_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fmd_result.toFixed(2) + "}  $$";
 
-  latex_ft0d_element.innerHTML = "$$ f_{t,0,d}=\\frac{f_{t,0,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + ft0k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + ft0d_result + "} $$";
+  latex_ft0d_element.innerHTML = "$$ f_{t,0,d}=\\frac{f_{t,0,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + ft0k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + ft0d_result.toFixed(2) + "} $$";
  
-  latex_fvd_element.innerHTML = "$$ f_{v,d}=\\frac{f_{v,d}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fvk_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fvd_result + "} $$";
+  latex_fvd_element.innerHTML = "$$ f_{v,d}=\\frac{f_{v,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fvk_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fvd_result.toFixed(2) + "} $$";
  
-  latex_fc90d_element.innerHTML = "$$ f_{c,90,d}=\\frac{f_{c,90,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fc90k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fc90d_result + "} $$";
+  latex_fc90d_element.innerHTML = "$$ f_{c,90,d}=\\frac{f_{c,90,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fc90k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fc90d_result.toFixed(2) + "} $$";
  
-  latex_fc0d_element.innerHTML = "$$ f_{c,0,d}=\\frac{f_{c,0,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fc0k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fc0d_result + "} $$";
+  latex_fc0d_element.innerHTML = "$$ f_{c,0,d}=\\frac{f_{c,0,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fc0k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fc0d_result.toFixed(2) + "} $$";
 
   // nośność na docisk
-  latex_fcAd_element.innerHTML = "$$ f_{c,\\alpha,d}=\\frac{f_{c,0,d}}{\\displaystyle\\frac{f_{c,0,d}}{k_{c,90}*f_{c,90,d}}*(\\sin(\\alpha))^2+(\\cos(\\alpha))^2} = \\frac{"+fc0d_result+"}{\\displaystyle({"+fc0d_result+"}/({"+kc90_value+"}*{"+fc90d_result+"}))*(\\sin("+alpha_value+"))^2+(\\cos("+alpha_value+"))^2}= {" + fcAd_result + "} $$";
+  latex_fcAd_element.innerHTML = "$$ f_{c,\\alpha,d}=\\frac{f_{c,0,d}}{\\displaystyle\\frac{f_{c,0,d}}{k_{c,90}*f_{c,90,d}}*(\\sin(\\alpha))^2+(\\cos(\\alpha))^2} = \\frac{"+fc0d_result.toFixed(2)+"}{\\displaystyle({"+fc0d_result.toFixed(2)+"}/({"+kc90_value+"}*{"+fc90d_result.toFixed(2)+"}))*(\\sin("+alpha_value+"))^2+(\\cos("+alpha_value+"))^2}= {" + fcAd_result.toFixed(2) + "} $$";
 
-  latex_an_element.innerHTML = "$$ A_{n}=\\frac{N_{d}} {\\displaystyle f_{c,\\alpha,d}} = \\frac{" + nd_value +"} {\\displaystyle {" + fcAd_result + "}} = {" + an_result + "} $$";
+  latex_an_element.innerHTML = "$$ A_{n}=\\frac{N_{d}} {\\displaystyle f_{c,\\alpha,d}} = \\frac{" + nd_value +"} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} = {" + an_result.toFixed(2) + "} $$";
 
   // Warunek nośności na docisk
-  latex_sigmacAd_element.innerHTML = "$$ \\sigma_{c,\\alpha,d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*s}} =\\frac{" + nd_value + "*cos(" + alpha_value + ")} {\\displaystyle {" + b_value + "* " + s_value + "}} = {" + sigmacAd_result + "}$$";
+  latex_sigmacAd_element.innerHTML = "$$ \\sigma_{c,\\alpha,d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*s}} =\\frac{" + nd_value + "*cos(" + alpha_value + ")} {\\displaystyle {" + b_value + "* " + s_value + "}} = {" + sigmacAd_result.toFixed(2) + "}$$";
 
-  latex_sigmaCompare_element.innerHTML = "$$ \\frac{\\sigma_{c,\\alpha,d}} {\\displaystyle {f_{c,\\alpha,d}}} = \\frac{" + sigmacAd_result + "} {\\displaystyle {" + fcAd_result + "}} ={" + sigmaCompare_result + "}$$";
+  latex_sigmaCompare_element.innerHTML = "$$ \\frac{\\sigma_{c,\\alpha,d}} {\\displaystyle {f_{c,\\alpha,d}}} = \\frac{" + sigmacAd_result.toFixed(2) + "} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} ={" + sigmaCompare_result.toFixed(2) + "}$$";
 
 // Nośność na ścinanie
-  latex_l1v_element.innerHTML = "$$ l_{1,v}={s*tg(\\alpha)} = {" + s_value + "*tg(" + alpha_value + ")} = {"+ l1v_result + "} $$";
+  latex_l1v_element.innerHTML = "$$ l_{1,v}={s*tg(\\alpha)} = {" + s_value + "*tg(" + alpha_value + ")} = {"+ l1v_result.toFixed(2) + "} $$";
 
-  latex_av_element.innerHTML = "$$ A_{v}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {f_{v,d}}} = \\frac{"+ nd_value + "*cos("+ alpha_value+")} {\\displaystyle {"+fvd_result+"}} = {"+ av_result + "} $$";
+  latex_av_element.innerHTML = "$$ A_{v}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {f_{v,d}}} = \\frac{"+ nd_value + "*cos("+ alpha_value+")} {\\displaystyle {"+fvd_result.toFixed(2)+"}} = {"+ av_result.toFixed(2) + "} $$";
 
-  latex_lv_element.innerHTML = "$$ l_{v}=\\frac{A_{v}} {\\displaystyle {b}} = \\frac{"+av_result+"} {\\displaystyle {"+b_value+"}} = {"+ lv_result + "} $$";
+  latex_lv_element.innerHTML = "$$ l_{v}=\\frac{A_{v}} {\\displaystyle {b}} = \\frac{"+av_result.toFixed(2)+"} {\\displaystyle {"+b_value+"}} = {"+ lv_result.toFixed(2) + "} $$";
 
-  latex_l2v1_element.innerHTML = "$$ l_{2,v'}={l_{v}-l_{1,v}} = {"+lv_result+"-"+l1v_result+"} = {"+ l2v1_result + "} $$";
+  latex_l2v1_element.innerHTML = "$$ l_{2,v'}={l_{v}-l_{1,v}} = {"+lv_result.toFixed(2)+"-"+l1v_result.toFixed(2)+"} = {"+ l2v1_result.toFixed(2) + "} $$";
 
 // Warunek nośności na ścinanie
-  latex_tauRd_element.innerHTML = "$$ \\tau_{Rd}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {A_{v}}} = \\frac{"+nd_value+"*cos("+alpha_value+")} {\\displaystyle {"+av_result+"}} = {"+ tauRd_result + "}  $$";
+  latex_tauRd_element.innerHTML = "$$ \\tau_{Rd}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {A_{v}}} = \\frac{"+nd_value+"*cos("+alpha_value+")} {\\displaystyle {"+av_result.toFixed(2)+"}} = {"+ tauRd_result.toFixed(2) + "}  $$";
 
-  latex_tauEd_element.innerHTML = "$$ \\tau_{Ed}= \\frac{N_{d}*cos(\\alpha)} {\\displaystyle{b*(l_{2,v}+l_{1,v})}} = \\frac{"+nd_value+"*cos("+alpha_value+")} {\\displaystyle{"+b_value+"*("+l2v_value+"+"+l1v_result+")}} = {"+ tauEd_result + "}  $$";
+  latex_tauEd_element.innerHTML = "$$ \\tau_{Ed}= \\frac{N_{d}*cos(\\alpha)} {\\displaystyle{b*(l_{2,v}+l_{1,v})}} = \\frac{"+nd_value+"*cos("+alpha_value+")} {\\displaystyle{"+b_value+"*("+l2v_value+"+"+l1v_result.toFixed(2)+")}} = {"+ tauEd_result.toFixed(2) + "}  $$";
 
-  latex_tauCompare_element.innerHTML = "$$ \\frac{\\tau_{Ed}} {\\displaystyle {\\tau_{Rd}}} = \\frac{"+tauEd_result+"} {\\displaystyle {"+tauRd_result+"}} = {"+ tauCompare_result + "}  $$";
+  latex_tauCompare_element.innerHTML = "$$ \\frac{\\tau_{Ed}} {\\displaystyle {\\tau_{Rd}}} = \\frac{"+tauEd_result.toFixed(2)+"} {\\displaystyle {"+tauRd_result.toFixed(2)+"}} = {"+ tauCompare_result.toFixed(2) + "}  $$";
+
+// Minimalna wymagana powierzchnia śruby
+
+  latex_asmin_element.innerHTML = "$$ A_{s,min}=\\frac{1.25*N_{d}*tg(60^{\\circ} -\\alpha)} {\\displaystyle {0.9*f_{ub}}} = \\frac{1.25*"+nd_value+"*tg(60^{\\circ} - "+alpha_value+")} {\\displaystyle {0.9*"+fub_value+"}} ={" + asmin_result.toFixed(2) + "} $$";
+
+  latex_ntd_element.innerHTML ="$$ N_{t,d}= {N_{d}*cos(\\alpha)} = {"+nd_value+"*cos("+alpha_value+")} = {"+ ntd_result.toFixed(2) + "}  $$";
+
+  latex_h2_element.innerHTML ="$$ h_{2}= {h-s} = {"+h_value+"-"+s_value+"} = {"+ h2_result.toFixed(2) + "}  $$";
+
+  latex_an1_element.innerHTML ="$$ A_{n'}= {h_{2}*(b-45mm)} = {"+h2_result.toFixed(2)+"*("+b_value+"-45)} = {"+ an1_result.toFixed(2) + "}  $$";
+
+  latex_e_element.innerHTML = "$$ e'=\\frac{h-h_{2}} {\\displaystyle {2}} =\\frac{"+ h_value + "-"+ h2_result.toFixed(2) + "} {\\displaystyle {2}} = {"+ e_result.toFixed(2) + "}  $$";
+
+  latex_m_element.innerHTML = "$$ M={N_{t,d}*e'}  = {"+ntd_result.toFixed(2)+"*"+e_result.toFixed(2)+"}= {"+ m_result.toFixed(2) + "}  $$";
+
+  latex_sigmat_element.innerHTML = "$$ \\sigma_{t}=\\frac{N_{t,d}} {\\displaystyle A_{n'}} = \\frac{"+ntd_result.toFixed(2)+"} {\\displaystyle {"+an1_result.toFixed(2)+"}} = {"+ sigmat_result.toFixed(2) + "}  $$";
+
+  latex_wy_element.innerHTML = "$$ Wy=\\frac{(b-45mm)*h_{2}^2} {\\displaystyle 6} = \\frac{("+ b_value + "-45)*"+ h2_result.toFixed(2) + "^2} {\\displaystyle 6}= {"+ wy_result.toFixed(2) + "}  $$";
+
+  latex_sigmam_element.innerHTML = "$$ \\sigma_{m}=\\frac{M} {\\displaystyle W_{y}} = \\frac{"+m_result.toFixed(2)+"} {\\displaystyle {"+wy_result.toFixed(2)+"}} = {"+ sigmam_result.toFixed(2) + "}  $$";
+
+// Warunek nośności
+  latex_condition_element.innerHTML = "$$ \\frac{\\sigma_{t}} {\\displaystyle f_{t,0,d}} + \\frac{\\sigma_{m}} {\\displaystyle f_{m,d}} = \\frac{"+sigmat_result.toFixed(2)+"} {\\displaystyle "+ft0d_result.toFixed(2)+"} + \\frac{"+sigmam_result.toFixed(2)+"} {\\displaystyle "+fmd_result.toFixed(2)+"} = {"+ condition_result.toFixed(2) + "}  $$";
 
   MathJax.typeset();
 }
-
-
-
-
-
-
-
-
-
-
