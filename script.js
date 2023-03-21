@@ -164,6 +164,47 @@ function kmod_listQ() {
 usability_element.onchange = kmod_listQ;
 durability_element.onchange = kmod_listQ;
 
+// table of fub 
+const strengthclasses = {
+  fub_46: 400,
+  fub_48: 400,
+  fub_56: 500,
+  fub_58: 500,
+  fub_66: 600,
+  fub_68: 600,
+  fub_88: 800,
+  fub_109: 1000,
+  fub_129: 1200,
+};
+
+const fub_element = document.getElementById("fub_value");
+let fub_value = 400;
+
+function fub_listQ() {
+  fub_element.textContent = strengthclasses[this.value];
+}
+document.getElementById("strength").onchange = fub_listQ;
+
+// table of name screw 
+const nameclasses = {
+    M8: 36.6,
+    M10: 58.0,
+    M12: 84.3,
+    M16: 157,
+    M20: 245,
+    M22: 303,
+    M24: 353,
+};
+
+const as_element = document.getElementById("as_value");
+let as_value = 36.6;
+
+function as_listQ() {
+  as_element.textContent = nameclasses[this.value];
+}
+document.getElementById("screw_name").onchange = as_listQ;
+
+
 // functions
 function calc_fmd(fmk, kmod){
   return fmk * kmod / 1.3;
@@ -255,8 +296,6 @@ const alpha_element = document.getElementById("alpha");
 const b_element = document.getElementById("b");
 const h_element = document.getElementById("h");
 const s_element = document.getElementById("s");
-const fub_element = document.getElementById("fub");
-const as_element = document.getElementById("as");
 const kc90_element = document.getElementById("kc90");
 const calculate_button = document.getElementById("calculate");
 
@@ -264,9 +303,7 @@ let nd_value = 0;
 let alpha_value = 0;
 let b_value = 0;
 let h_value = 0;
-let s_value = 0;
-let fub_value = 0;
-let as_value = 0;
+let s_value = 40;
 let kc90_value = 1;
 let l2v_value = 150;
 
@@ -281,7 +318,7 @@ calculate_button.addEventListener('click', () => {
   alpha_value = parseFloat(alpha_element.value);
   b_value = parseFloat(b_element.value);
   h_value = parseFloat(h_element.value);
-  s_value = parseFloat(s_element.value);
+  // s_value = parseFloat(s_element.value);
   fub_value = parseFloat(fub_element.value);
   as_value = parseFloat(as_element.value);
 
