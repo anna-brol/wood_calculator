@@ -6,60 +6,60 @@ const woodclasses = {
     fvt90k: 0.4,
     fc0k: 16,
     fc90k: 2.0,
-    fvk: 1.7,
+    fvk: 3.0,
   },
   C16: {
     fmk: 16,
     ft0k: 10,
-    fvt90k: 0.4,
+    ft90k: 0.4,
     fc0k: 17,
     fc90k: 2.2,
-    fvk: 1.8,
+    fvk: 3.2,
   },
   C18: {
     fmk: 18,
     ft0k: 11,
-    ft90k: 0.5,
+    ft90k: 0.4,
     fc0k: 18,
     fc90k: 2.2,
-    fvk: 2.0,
+    fvk: 3.4,
   },
   C20: {
     fmk: 20,
     ft0k: 12,
-    ft90k: 0.5,
+    ft90k: 0.4,
     fc0k: 19,
     fc90k: 2.3,
-    fvk: 2.2,
+    fvk: 3.6,
   },
   C22: {
     fmk: 22,
     ft0k: 13,
-    ft90k: 0.5,
+    ft90k: 0.4,
     fc0k: 20,
     fc90k: 2.4,
-    fvk: 2.4,
+    fvk: 3.8,
   },
   C24: {
     fmk: 24,
     ft0k: 14,
-    ft90k: 0.5,
+    ft90k: 0.4,
     fc0k: 21,
     fc90k: 2.5,
-    fvk: 4,
+    fvk: 4.0,
   },
   C27: {
     fmk: 27,
     ft0k: 16,
-    ft90k: 0.6,
+    ft90k: 0.4,
     fc0k: 22,
     fc90k: 2.6,
-    fvk: 2.8,
+    fvk: 4.0,
   },
   C30: {
     fmk: 30,
     ft0k: 18,
-    ft90k: 0.6,
+    ft90k: 0.4,
     fc0k: 23,
     fc90k: 2.7,
     fvk: 3.0,
@@ -67,34 +67,34 @@ const woodclasses = {
   C35: {
     fmk: 35,
     ft0k: 21,
-    ft90k: 0.6,
+    ft90k: 0.4,
     fc0k: 25,
     fc90k: 2.8,
-    fvk: 3.4,
+    fvk: 4.0,
   },
   C40: {
     fmk: 40,
     ft0k: 24,
-    ft90k: 0.6,
+    ft90k: 0.4,
     fc0k: 26,
     fc90k: 2.9,
-    fvk: 3.8,
+    fvk: 4.0,
   },
   C45: {
     fmk: 45,
     ft0k: 27,
-    ft90k: 0.6,
+    ft90k: 0.4,
     fc0k: 27,
     fc90k: 3.1,
-    fvk: 3.8,
+    fvk: 4.0,
   },
   C50: {
     fmk: 50,
     ft0k: 30,
-    ft90k: 0.6,
+    ft90k: 0.4,
     fc0k: 29,
     fc90k: 3.2,
-    fvk: 3.8,
+    fvk: 4.0,
   },
 };
 
@@ -106,12 +106,12 @@ const fc0k_element = document.getElementById("fc0k");
 const fc90k_element = document.getElementById("fc90k");
 const fvk_element = document.getElementById("fvk");
 
-let fmk_value = 14
-let ft0k_value = 8
-let ft90k_value = 0.4
-let fc0k_value = 16
-let fc90k_value = 2
-let fvk_value = 1.7
+let fmk_value = 14;
+let ft0k_value = 8;
+let ft90k_value = 0.4;
+let fc0k_value = 16;
+let fc90k_value = 2;
+let fvk_value = 1.7;
 
 function listQ() {
   fmk_element.textContent = woodclasses[this.value].fmk;
@@ -212,9 +212,7 @@ function calc_tauRd(nd, av, alpha){
 }
 function calc_tauEd(nd, b, l2v, l1v, alpha){
   x=(alpha*Math.PI/180);
- 
   return ((nd* (Math.cos(x)))/ (b * (l2v + l1v)));
-
 }
 function calc_tauCompare(tauEd, tauRd){
   return tauEd / tauRd;
@@ -269,35 +267,14 @@ let h_value = 0;
 let s_value = 0;
 let fub_value = 0;
 let as_value = 0;
-let kc90_value = 0;
-
-let fmd_result = 0;
-let ft0d_result = 0;
-let fvd_result = 0;
-let fc90d_result = 0;
-let fc0d_result = 0;
-let fcAd_result = 0;
-let an_result = 0;
-let sigmacAd_result = 0;
-let sigmaCompare_result = 0;
-let l1v_result = 0;
-let av_result = 0;
-let lv_result = 0;
-let l2v1_result = 0;
-let tauRd_result = 0;
-let tauEd_result = 0;
-let tauCompare_result = 0;
-let asmin_result = 0;
-let ntd_result = 0;
-let h2_result = 0;
-let an1_result = 0;
-let e_result = 0;
-let m_result = 0;
-let sigmat_result = 0;
-let wy_result = 0;
-let sigmam_result = 0;
-let condition_result = 0;
+let kc90_value = 1;
 let l2v_value = 150;
+
+let [fmd_result, ft0d_result, fvd_result, fc90d_result, fc0d_result, fcAd_result, an_result, sigmacAd_result, sigmaCompare_result, l1v_result, av_result, lv_result, l2v1_result, tauRd_result, tauEd_result, tauCompare_result, asmin_result, ntd_result, h2_result, an1_result, e_result, m_result, sigmat_result, wy_result, sigmam_result, condition_result] = Array(26).fill(0);
+let condition_literal = "";
+
+// all hint <p>
+const hint_elements = document.querySelectorAll(".hint");
 
 calculate_button.addEventListener('click', () => {
   nd_value = parseFloat(nd_element.value);
@@ -307,7 +284,6 @@ calculate_button.addEventListener('click', () => {
   s_value = parseFloat(s_element.value);
   fub_value = parseFloat(fub_element.value);
   as_value = parseFloat(as_element.value);
-  kc90_value = parseFloat(kc90_element.value);
 
   fmd_result = calc_fmd(fmk_value, kmod_value);
   ft0d_result = calc_ft0d(ft0k_value, kmod_value);
@@ -335,7 +311,9 @@ calculate_button.addEventListener('click', () => {
   wy_result = calc_wy(b_value, h2_result);
   sigmam_result = calc_sigmam(m_result, wy_result);
   condition_result = calc_condition(sigmat_result, ft0d_result, sigmam_result, fmd_result);
+  condition_literal = condition_result < 1 ? "Warunek spełniony!" : "Warunek nie został spełniony!"
 
+  hint_elements.forEach(el => {el.hidden=false});
   update_latex();
 })
 
@@ -361,8 +339,7 @@ const latex_l2v1_element = document.getElementById("latex_l2v1");
 // Warunek nośności na ścinanie
 const latex_tauRd_element = document.getElementById("latex_tauRd");
 const latex_tauEd_element = document.getElementById("latex_tauEd");
-const latex_tauCompare_element = document.getElementById
-("latex_tauCompare");
+const latex_tauCompare_element = document.getElementById("latex_tauCompare");
 // Minimalna wymagana powierzchnia śruby
 const latex_asmin_element = document.getElementById("latex_asmin");
 const latex_ntd_element = document.getElementById("latex_ntd");
@@ -375,7 +352,7 @@ const latex_wy_element = document.getElementById("latex_wy");
 const latex_sigmam_element = document.getElementById("latex_sigmam");
 // Warunek nośności
 const latex_condition_element = document.getElementById("latex_condition");
-
+const latex_condition_literal_element = document.getElementById("latex_condition_literal");
 
 function update_latex() {
   // calculation
@@ -436,7 +413,9 @@ function update_latex() {
   latex_sigmam_element.innerHTML = "$$ \\sigma_{m}=\\frac{M} {\\displaystyle W_{y}} = \\frac{"+m_result.toFixed(2)+"} {\\displaystyle {"+wy_result.toFixed(2)+"}} = {"+ sigmam_result.toFixed(2) + "}  $$";
 
 // Warunek nośności
-  latex_condition_element.innerHTML = "$$ \\frac{\\sigma_{t}} {\\displaystyle f_{t,0,d}} + \\frac{\\sigma_{m}} {\\displaystyle f_{m,d}} = \\frac{"+sigmat_result.toFixed(2)+"} {\\displaystyle "+ft0d_result.toFixed(2)+"} + \\frac{"+sigmam_result.toFixed(2)+"} {\\displaystyle "+fmd_result.toFixed(2)+"} = {"+ condition_result.toFixed(2) + "}  $$";
+  latex_condition_element.innerHTML = "$$ \\frac{\\sigma_{t}} {\\displaystyle f_{t,0,d}} + \\frac{\\sigma_{m}} {\\displaystyle f_{m,d}} = \\frac{"+sigmat_result.toFixed(2)+"} {\\displaystyle "+ft0d_result.toFixed(2)+"} + \\frac{"+sigmam_result.toFixed(2)+"} {\\displaystyle "+fmd_result.toFixed(2)+"} = {"+ condition_result.toFixed(2) + "} < 1 $$ ";
+  
+  latex_condition_literal_element.innerHTML = condition_literal;
 
   MathJax.typeset();
 }

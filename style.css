@@ -30,7 +30,11 @@ td {
   font-size: 20px;
 }
 
-.kom {
-  font-size: 10px;
-  color: rgb(197, 107, 22);
+a {
+  text-decoration: none;
+  color: rgb(34, 147, 218);
+}
+a:hover {
+  text-decoration: none;
+  color: rgb(20, 98, 146);
 }
