@@ -299,6 +299,21 @@ const s_element = document.getElementById("s");
 const kc90_element = document.getElementById("kc90");
 const calculate_button = document.getElementById("calculate");
 
+// check if forms are filled
+function areFormsFilled(){
+  if (nd_element.value && alpha_element.value && b_element.value && h_element.value){
+    calculate_button.disabled = false;
+  }
+  else {
+    calculate_button.disabled = true;
+  }
+}
+
+nd_element.onkeyup = areFormsFilled;
+alpha_element.onkeyup = areFormsFilled;
+b_element.onkeyup = areFormsFilled;
+h_element.onkeyup = areFormsFilled;
+
 let nd_value = 0;
 let alpha_value = 0;
 let b_value = 0;
