@@ -334,8 +334,6 @@ calculate_button.addEventListener('click', () => {
   b_value = parseFloat(b_element.value);
   h_value = parseFloat(h_element.value);
   // s_value = parseFloat(s_element.value);
-  fub_value = parseFloat(fub_element.value);
-  as_value = parseFloat(as_element.value);
 
   fmd_result = calc_fmd(fmk_value, kmod_value);
   ft0d_result = calc_ft0d(ft0k_value, kmod_value);
