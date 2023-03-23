@@ -3,10 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kalkulator połączeń ciesielskich</title>
+    <title>Połączenie na wrąb</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Zilla+Slab+Highlight:wght@700&family=Zilla+Slab:wght@500&display=swap"
@@ -20,49 +25,53 @@
   </head>
 
   <body class="bg-light p-3">
-    <div class="container">
-      <a href="/">&#11013; Powrót do strony głównej</a>
-      <br>
-      <img class="rounded mx-auto d-block" src="res/rys1.png" alt="Wrąb">
+    <div class="container" id="container">
+      <a id="return" href="index.html">&#11013; Powrót do strony głównej</a>
+      <br />
+      <img class="rounded mx-auto d-block" src="res/rys1.png" alt="Wrąb" />
       <h3>DANE:</h3>
       <div class="row d-flex justify-content-between">
         <div class="col-sm">
-      <label for="wood">Klasa drewna konstrukcyjnego litego:</label>
- 
-      <select class="form-select mb-2" name="wood_class" id="wood">
-        <option value="C14">C14</option>
-        <option value="C16">C16</option>
-        <option value="C18">C18</option>
-        <option value="C20">C20</option>
-        <option value="C22">C22</option>
-        <option value="C24">C24</option>
-        <option value="C27">C27</option>
-        <option value="C30">C30</option>
-        <option value="C35">C35</option>
-        <option value="C40">C40</option>
-        <option value="C45">C45</option>
-        <option value="C50">C50</option>
-      </select>
-    </div>
-      <div class="col-sm">
-      <label for="kmod">Klasa użytkowania:</label>
-      <select class="form-select mb-2" name="usage_class" id="usability">
-        <option value="use_1i2">1 i 2</option>
-        <option value="use_3">3</option>
-      </select>
-    </div>
-      <div class="col-sm">
-      <label for="kmod">Klasa trwania obciążenia:</label>
-      <select class="form-select mb-3" name="duration_class" id="durability">
-        <option value="dur_1">1 - stałe</option>
-        <option value="dur_2">2 - długotrwałe</option>
-        <option value="dur_3">3 - średniotrwałe</option>
-        <option value="dur_4">4 - krótkotrwałe</option>
-        <option value="dur_5">5 - chwilowe</option>
-      </select>
-    </div>
-    </div>
-    <div class="row">
+          <label for="wood">Klasa drewna konstrukcyjnego litego:</label>
+
+          <select class="form-select mb-2" name="wood_class" id="wood">
+            <option value="C14">C14</option>
+            <option value="C16">C16</option>
+            <option value="C18">C18</option>
+            <option value="C20">C20</option>
+            <option value="C22">C22</option>
+            <option value="C24">C24</option>
+            <option value="C27">C27</option>
+            <option value="C30">C30</option>
+            <option value="C35">C35</option>
+            <option value="C40">C40</option>
+            <option value="C45">C45</option>
+            <option value="C50">C50</option>
+          </select>
+        </div>
+        <div class="col-sm">
+          <label for="kmod">Klasa użytkowania:</label>
+          <select class="form-select mb-2" name="usage_class" id="usability">
+            <option value="use_1i2">1 i 2</option>
+            <option value="use_3">3</option>
+          </select>
+        </div>
+        <div class="col-sm">
+          <label for="kmod">Klasa trwania obciążenia:</label>
+          <select
+            class="form-select mb-3"
+            name="duration_class"
+            id="durability"
+          >
+            <option value="dur_1">1 - stałe</option>
+            <option value="dur_2">2 - długotrwałe</option>
+            <option value="dur_3">3 - średniotrwałe</option>
+            <option value="dur_4">4 - krótkotrwałe</option>
+            <option value="dur_5">5 - chwilowe</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-sm">
           <label for="fub">Symbol klasy śruby (nakrętki):</label>
           <select class="form-select mb-2" name="strength_class" id="strength">
@@ -77,7 +86,7 @@
             <option value="fub_129">12.9</option>
           </select>
         </div>
-          <div class="col-sm">
+        <div class="col-sm">
           <label for="name">Śruba:</label>
           <select class="form-select mb-3" name="name_class" id="screw_name">
             <option value="M8">M8</option>
@@ -88,11 +97,11 @@
             <option value="M22">M22</option>
             <option value="M24">M42</option>
           </select>
-  </div>
-  </div>
+        </div>
+      </div>
       <table class="text-center">
         <tr class="header">
-          <th colspan="6" >Wytrzymałość [MPa] - wartości charakterystyczne</th>
+          <th colspan="6">Wytrzymałość [MPa] - wartości charakterystyczne</th>
           <th rowspan="2">Współczynnik k<sub>mod</sub></th>
           <th colspan="2">Śruba</th>
         </tr>
@@ -132,34 +141,50 @@
 
       <div class="row mb-4 mt-3">
         <div class="col-sm">
-      <label for="Nd">Siła obliczeniowa N<sub>d</sub>:</label>
-      <input class="form-control" type="number" name="Nd" id="nd" placeholder="N" />
-</div>
-<div class="col-sm">
-      <label for="alpha">&alpha; :</label>
-      <input class="form-control" type="number" name="alpha" id="alpha" placeholder="&deg" />
-</div>
-<div class="col-sm">
-      <label for="b">b :</label>
-      <input class="form-control" type="number" name="b" id="b" placeholder="mm" />
-</div>
-<div class="col-sm">
-      <label for="h">h :</label>
-      <input class="form-control" type="number" name="h" id="h" placeholder="mm" />
-    </div>
-</div>
+          <label for="Nd">Siła obliczeniowa N<sub>d</sub>:</label>
+          <input
+            class="form-control"
+            type="number"
+            name="Nd"
+            id="nd"
+            placeholder="N"
+          />
+        </div>
+        <div class="col-sm">
+          <label for="alpha">&alpha; :</label>
+          <input
+            class="form-control"
+            type="number"
+            name="alpha"
+            id="alpha"
+            placeholder="&deg"
+          />
+        </div>
+        <div class="col-sm">
+          <label for="b">b :</label>
+          <input
+            class="form-control"
+            type="number"
+            name="b"
+            id="b"
+            placeholder="mm"
+          />
+        </div>
+        <div class="col-sm">
+          <label for="h">h :</label>
+          <input
+            class="form-control"
+            type="number"
+            name="h"
+            id="h"
+            placeholder="mm"
+          />
+        </div>
+      </div>
 
-      <!-- <label for="s">s :</label>
-      <input type="number" name="s" id="s" placeholder="mm" /> -->
-
-      <!-- <label for="kc90">k<sub>c,90</sub>:</label>
-      <input type="number" name="kc90" id="kc90" placeholder="1" /> -->
-
-      <button class="btn btn-success btn-lg btn-block w-100" id="calculate">OBLICZ</button>
-      <!-- <p class="kom">
-        ** Te dane są dla śruby M10 - trzeba poszukać czy nie trzeba zrobić jak
-        wyżej comboboxa. **
-      </p> -->
+      <button class="btn btn-success btn-lg btn-block w-100" id="calculate">
+        OBLICZ
+      </button>
 
       <div class="latex" id="latex_fmd"></div>
       <div class="latex" id="latex_ft0d"></div>
@@ -188,7 +213,7 @@
         <div class="latex" id="latex_av"></div>
         <div class="latex" id="latex_lv"></div>
         <div class="latex" id="latex_l2v1"></div>
-        <!-- <p class="kom">** Przyjęto l<sub>2,v</sub>=150mm Whyyy? **</p> -->
+        <!-- <p class="kom">** Przyjęto l<sub>2,v</sub>=150mm **</p> -->
       </div>
 
       <div class="warunek_scinanie">
@@ -209,16 +234,17 @@
         <div class="latex" id="latex_sigmat"></div>
         <div class="latex" id="latex_wy"></div>
         <div class="latex" id="latex_sigmam"></div>
-
       </div>
       <p hidden class="hint">MINIMALNA WYMAGANA POWIERZCHNIA ŚRUBY:</p>
       <div class="latex" id="latex_condition"></div>
-      <div class="latex" id="latex_condition_literal"> </div>
-    <p hidden class="hint mt-3"><button class="btn btn-success btn-lg btn-block w-25" id="print">PDF</button></p>
-  </div>
-    
-      <script src="script.js" async defer></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+      <div class="latex" id="latex_condition_literal"></div>
+      <p hidden class="hint mt-3"><button class="btn btn-success btn-lg btn-block w-25" id="download-button">Wygeneruj PDF / Drukuj</button></p>
     </div>
+    <script src="script.js" async defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

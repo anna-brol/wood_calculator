@@ -38,3 +38,8 @@ a:hover {
   text-decoration: none;
   color: rgb(20, 98, 146);
 }
+
+.form-control:focus {
+  border-color: #5f65b2;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(72, 74, 193, 0.6);
+}

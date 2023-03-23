@@ -456,3 +456,21 @@ function update_latex() {
 
   MathJax.typeset();
 }
+
+// export to PDF
+const pdf_button = document.getElementById('download-button');
+const container = document.getElementById('container');
+const return_button = document.getElementById('return');
+
+
+function generatePDF() {
+  calculate_button.style.display = "none";
+  pdf_button.style.display = "none";
+  return_button.style.display = "none";
+  window.print();
+  calculate_button.style.display = "";
+  pdf_button.style.display = "";
+  return_button.style.display = "";
+}
+
+pdf_button.addEventListener('click', generatePDF);
