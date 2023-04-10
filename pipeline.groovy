@@ -15,7 +15,7 @@ pipeline {
         }
         stage('remove old container') {
             steps {
-                 sh 'docker container rm -f wood &>/dev/null'
+                 sh 'docker container rm -f wood &>/dev/null && sleep 5'
             }
         }
         stage('run container') {
