@@ -222,21 +222,21 @@ function calc_fc0d(fc0k, kmod){
   return fc0k * kmod / 1.3;
 }
 function calc_fcAd(fc0d, kc90, fc90d, alpha){
-  s = Math.sin(alpha*Math.PI/180);
-  c = Math.cos(alpha*Math.PI/180);
+  let s = Math.sin(alpha*Math.PI/180);
+  let c = Math.cos(alpha*Math.PI/180);
   return fc0d/(fc0d/(kc90*fc90d)*(s)**2+(c)**2);
 }
 function calc_an(nd, fcAd){
   return nd / fcAd;
 }
-function calc_sigmacAd(nd, b, s, alpha){
-  return (nd * Math.cos(alpha*Math.PI/180)) / (b*s);
+function calc_sigmacAd(nd, b, h1, alpha){
+  return (nd * Math.cos(alpha*Math.PI/180)) / (b*h1);
 }
 function calc_sigmaCompare(sigmacAd, fcAd){
   return sigmacAd / fcAd;
 }
-function calc_l1v(s, alpha){
-  return s * Math.tan(alpha*Math.PI/180);
+function calc_l1v(h1, alpha){
+  return h1 * Math.tan(alpha*Math.PI/180);
 }
 function calc_av(nd, fvd, alpha){
   return nd * Math.cos(alpha*Math.PI/180) / fvd;
@@ -248,25 +248,25 @@ function calc_l2v1(lv, l1v){
   return lv-l1v;
 }
 function calc_tauRd(nd, av, alpha){
-  x=(alpha*Math.PI/180);
+  let x=(alpha*Math.PI/180);
   return nd * Math.cos(x) / av;
 }
 function calc_tauEd(nd, b, l2v, l1v, alpha){
-  x=(alpha*Math.PI/180);
+  let x=(alpha*Math.PI/180);
   return ((nd* (Math.cos(x)))/ (b * (l2v + l1v)));
 }
 function calc_tauCompare(tauEd, tauRd){
   return tauEd / tauRd;
 }
 function calc_asmin(nd, fub, alpha){
-  x = 60 - alpha;
+  let x = 60 - alpha;
   return (1.25 * nd * Math.tan(x*Math.PI/180))/(0.9 * fub);
 }
 function calc_ntd(nd, alpha){
   return nd * Math.cos(alpha*Math.PI/180);
 }
-function calc_h2(h, s){
-  return h - s;
+function calc_h2(h, h1){
+  return h - h1;
 }
 function calc_an1(h2, b){
   return h2 * ((b - 45));
@@ -295,8 +295,6 @@ const nd_element = document.getElementById("nd");
 const alpha_element = document.getElementById("alpha");
 const b_element = document.getElementById("b");
 const h_element = document.getElementById("h");
-const s_element = document.getElementById("s");
-const kc90_element = document.getElementById("kc90");
 const calculate_button = document.getElementById("calculate");
 
 // check if forms are filled
@@ -318,9 +316,10 @@ let nd_value = 0;
 let alpha_value = 0;
 let b_value = 0;
 let h_value = 0;
-let s_value = 40;
+let h1_value = 0;
+// let s_value = 40;
 let kc90_value = 1;
-let l2v_value = 150;
+let l2v_value = 0;
 
 let [fmd_result, ft0d_result, fvd_result, fc90d_result, fc0d_result, fcAd_result, an_result, sigmacAd_result, sigmaCompare_result, l1v_result, av_result, lv_result, l2v1_result, tauRd_result, tauEd_result, tauCompare_result, asmin_result, ntd_result, h2_result, an1_result, e_result, m_result, sigmat_result, wy_result, sigmam_result, condition_result] = Array(26).fill(0);
 let condition_literal = "";
@@ -333,8 +332,8 @@ calculate_button.addEventListener('click', () => {
   alpha_value = parseFloat(alpha_element.value);
   b_value = parseFloat(b_element.value);
   h_value = parseFloat(h_element.value);
-  // s_value = parseFloat(s_element.value);
-
+  h1_value = Math.floor(parseFloat(h_element.value) / 3);
+  
   fmd_result = calc_fmd(fmk_value, kmod_value);
   ft0d_result = calc_ft0d(ft0k_value, kmod_value);
   fvd_result = calc_fvd(fvk_value, kmod_value);  
@@ -342,18 +341,20 @@ calculate_button.addEventListener('click', () => {
   fc0d_result = calc_fc0d(fc0k_value, kmod_value);
   fcAd_result = calc_fcAd(fc0d_result, kc90_value, fc90d_result, alpha_value);
   an_result = calc_an(nd_value, fcAd_result);
-  sigmacAd_result = calc_sigmacAd(nd_value, b_value, s_value, alpha_value);
+  // s_value = an_result / b_value;
+  sigmacAd_result = calc_sigmacAd(nd_value, b_value, h1_value, alpha_value);
   sigmaCompare_result = calc_sigmaCompare(sigmacAd_result, fcAd_result);
-  l1v_result = calc_l1v(s_value, alpha_value);
+  l1v_result = calc_l1v(h1_value, alpha_value);
   av_result = calc_av(nd_value, fvd_result, alpha_value);
   lv_result = calc_lv(av_result, b_value);
   l2v1_result = calc_l2v1(lv_result, l1v_result);
+  l2v_value = Math.ceil(l2v1_result/50)*50;
   tauRd_result = calc_tauRd(nd_value, av_result, alpha_value);
   tauEd_result = calc_tauEd(nd_value, b_value, l2v_value, l1v_result, alpha_value);
   tauCompare_result = calc_tauCompare(tauEd_result, tauRd_result);
   asmin_result = calc_asmin(nd_value, fub_value, alpha_value);
   ntd_result = calc_ntd(nd_value, alpha_value);
-  h2_result = calc_h2(h_value, s_value);
+  h2_result = calc_h2(h_value, h1_value);
   an1_result = calc_an1(h2_result, b_value);
   e_result = calc_e(h_value, h2_result);
   m_result = calc_m(ntd_result, e_result);
@@ -376,6 +377,7 @@ const latex_fc0d_element = document.getElementById("latex_fc0d");
 // nośność na docisk
 const latex_fcAd_element = document.getElementById("latex_fcAd");
 const latex_an_element = document.getElementById("latex_an");
+const latex_h1_element = document.getElementById("latex_h1");
 // Warunek nośności na docisk
 const latex_sigmacAd_element = document.getElementById("latex_sigmacAd");
 const latex_sigmaCompare_element = document.getElementById("latex_sigmaCompare");
@@ -421,19 +423,21 @@ function update_latex() {
 
   latex_an_element.innerHTML = "$$ A_{n}=\\frac{N_{d}} {\\displaystyle f_{c,\\alpha,d}} = \\frac{" + nd_value +"} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} = {" + an_result.toFixed(2) + "} $$";
 
+  latex_h1_element.innerHTML = "$$ h_1 ≤ ⌊h/3⌋ ⟹ h_1 = {" + h1_value + "} $$";
+
   // Warunek nośności na docisk
-  latex_sigmacAd_element.innerHTML = "$$ \\sigma_{c,\\alpha,d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*s}} =\\frac{" + nd_value + "*cos(" + alpha_value + ")} {\\displaystyle {" + b_value + "* " + s_value + "}} = {" + sigmacAd_result.toFixed(2) + "}$$";
+  latex_sigmacAd_element.innerHTML = "$$ \\sigma_{c,\\alpha,d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*s}} =\\frac{" + nd_value + "*cos(" + alpha_value + ")} {\\displaystyle {" + b_value + "* " + h1_value + "}} = {" + sigmacAd_result.toFixed(2) + "}$$";
 
   latex_sigmaCompare_element.innerHTML = "$$ \\frac{\\sigma_{c,\\alpha,d}} {\\displaystyle {f_{c,\\alpha,d}}} = \\frac{" + sigmacAd_result.toFixed(2) + "} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} ={" + sigmaCompare_result.toFixed(2) + "}$$";
 
 // Nośność na ścinanie
-  latex_l1v_element.innerHTML = "$$ l_{1,v}={s*tg(\\alpha)} = {" + s_value + "*tg(" + alpha_value + ")} = {"+ l1v_result.toFixed(2) + "} $$";
+  latex_l1v_element.innerHTML = "$$ l_{1,v}={h_1*tg(\\alpha)} = {" + h1_value + "*tg(" + alpha_value + ")} = {"+ l1v_result.toFixed(2) + "} $$";
 
   latex_av_element.innerHTML = "$$ A_{v}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {f_{v,d}}} = \\frac{"+ nd_value + "*cos("+ alpha_value+")} {\\displaystyle {"+fvd_result.toFixed(2)+"}} = {"+ av_result.toFixed(2) + "} $$";
 
   latex_lv_element.innerHTML = "$$ l_{v}=\\frac{A_{v}} {\\displaystyle {b}} = \\frac{"+av_result.toFixed(2)+"} {\\displaystyle {"+b_value+"}} = {"+ lv_result.toFixed(2) + "} $$";
 
-  latex_l2v1_element.innerHTML = "$$ l_{2,v'}={l_{v}-l_{1,v}} = {"+lv_result.toFixed(2)+"-"+l1v_result.toFixed(2)+"} = {"+ l2v1_result.toFixed(2) + "} $$";
+  latex_l2v1_element.innerHTML = "$$ l_{2,v'}={l_{v}-l_{1,v}} = {"+lv_result.toFixed(2)+"-"+l1v_result.toFixed(2)+"} = {"+ l2v1_result.toFixed(2) + "} ⟹ l_{2,v} = {" + l2v_value + "} $$";
 
 // Warunek nośności na ścinanie
   latex_tauRd_element.innerHTML = "$$ \\tau_{Rd}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {A_{v}}} = \\frac{"+nd_value+"*cos("+alpha_value+")} {\\displaystyle {"+av_result.toFixed(2)+"}} = {"+ tauRd_result.toFixed(2) + "}  $$";
@@ -448,7 +452,7 @@ function update_latex() {
 
   latex_ntd_element.innerHTML ="$$ N_{t,d}= {N_{d}*cos(\\alpha)} = {"+nd_value+"*cos("+alpha_value+")} = {"+ ntd_result.toFixed(2) + "}  $$";
 
-  latex_h2_element.innerHTML ="$$ h_{2}= {h-s} = {"+h_value+"-"+s_value+"} = {"+ h2_result.toFixed(2) + "}  $$";
+  latex_h2_element.innerHTML ="$$ h_{2}= {h-s} = {"+h_value+"-"+h1_value+"} = {"+ h2_result.toFixed(2) + "}  $$";
 
   latex_an1_element.innerHTML ="$$ A_{n'}= {h_{2}*(b-45mm)} = {"+h2_result.toFixed(2)+"*("+b_value+"-45)} = {"+ an1_result.toFixed(2) + "}  $$";
 
