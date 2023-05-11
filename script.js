@@ -204,6 +204,8 @@ function as_listQ() {
 }
 document.getElementById("screw_name").onchange = as_listQ;
 
+// variant selector
+const variant_element = document.getElementById("variant");
 
 // functions
 function calc_fmd(fmk, kmod){
@@ -329,7 +331,7 @@ const hint_elements = document.querySelectorAll(".hint");
 
 calculate_button.addEventListener('click', () => {
   nd_value = parseFloat(nd_element.value);
-  alpha_value = parseFloat(alpha_element.value);
+  alpha_value = parseFloat(alpha_element.value)/parseFloat(variant_element.value);
   b_value = parseFloat(b_element.value);
   h_value = parseFloat(h_element.value);
   h1_value = Math.floor(parseFloat(h_element.value) / 3);
@@ -348,7 +350,8 @@ calculate_button.addEventListener('click', () => {
   av_result = calc_av(nd_value, fvd_result, alpha_value);
   lv_result = calc_lv(av_result, b_value);
   l2v1_result = calc_l2v1(lv_result, l1v_result);
-  l2v_value = Math.ceil(l2v1_result/50)*50;
+  let l2v = Math.floor(l2v1_result);
+  l2v_value = l2v > 150 ? l2v : 150;
   tauRd_result = calc_tauRd(nd_value, av_result, alpha_value);
   tauEd_result = calc_tauEd(nd_value, b_value, l2v_value, l1v_result, alpha_value);
   tauCompare_result = calc_tauCompare(tauEd_result, tauRd_result);
@@ -419,16 +422,18 @@ function update_latex() {
   latex_fc0d_element.innerHTML = "$$ f_{c,0,d}=\\frac{f_{c,0,k}*k_{mod}}{\\displaystyle{1.3}} = \\frac{" + fc0k_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + fc0d_result.toFixed(2) + "} $$";
 
   // nośność na docisk
-  latex_fcAd_element.innerHTML = "$$ f_{c,\\alpha,d}=\\frac{f_{c,0,d}}{\\displaystyle\\frac{f_{c,0,d}}{k_{c,90}*f_{c,90,d}}*(\\sin(\\alpha))^2+(\\cos(\\alpha))^2} = \\frac{"+fc0d_result.toFixed(2)+"}{\\displaystyle({"+fc0d_result.toFixed(2)+"}/({"+kc90_value+"}*{"+fc90d_result.toFixed(2)+"}))*(\\sin("+alpha_value+"))^2+(\\cos("+alpha_value+"))^2}= {" + fcAd_result.toFixed(2) + "} $$";
+  latex_fcAd_element.innerHTML = "$$ f_{c,{"+ alpha_value +"},d}=\\frac{f_{c,0,d}}{\\displaystyle\\frac{f_{c,0,d}}{k_{c,90}*f_{c,90,d}}*(\\sin(\\alpha))^2+(\\cos(\\alpha))^2} = \\frac{"+fc0d_result.toFixed(2)+"}{\\displaystyle({"+fc0d_result.toFixed(2)+"}/({"+kc90_value+"}*{"+fc90d_result.toFixed(2)+"}))*(\\sin("+alpha_value+"))^2+(\\cos("+alpha_value+"))^2}= {" + fcAd_result.toFixed(2) + "} $$";
 
-  latex_an_element.innerHTML = "$$ A_{n}=\\frac{N_{d}} {\\displaystyle f_{c,\\alpha,d}} = \\frac{" + nd_value +"} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} = {" + an_result.toFixed(2) + "} $$";
+
+
+  latex_an_element.innerHTML = "$$ A_{n}=\\frac{N_{d}} {\\displaystyle f_{c,{"+ alpha_value +"},d}} = \\frac{" + nd_value +"} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} = {" + an_result.toFixed(2) + "} $$";
 
   latex_h1_element.innerHTML = "$$ h_1 ≤ ⌊h/3⌋ ⟹ h_1 = {" + h1_value + "} $$";
 
   // Warunek nośności na docisk
-  latex_sigmacAd_element.innerHTML = "$$ \\sigma_{c,\\alpha,d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*s}} =\\frac{" + nd_value + "*cos(" + alpha_value + ")} {\\displaystyle {" + b_value + "* " + h1_value + "}} = {" + sigmacAd_result.toFixed(2) + "}$$";
+  latex_sigmacAd_element.innerHTML = "$$ \\sigma_{c,{"+ alpha_value +"},d}=\\frac{N_{d}*cos(\\alpha)} {\\displaystyle {b*h_1}} =\\frac{" + nd_value + "*cos(" + alpha_value + ")} {\\displaystyle {" + b_value + "* " + h1_value + "}} = {" + sigmacAd_result.toFixed(2) + "}$$";
 
-  latex_sigmaCompare_element.innerHTML = "$$ \\frac{\\sigma_{c,\\alpha,d}} {\\displaystyle {f_{c,\\alpha,d}}} = \\frac{" + sigmacAd_result.toFixed(2) + "} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} ={" + sigmaCompare_result.toFixed(2) + "}$$";
+  latex_sigmaCompare_element.innerHTML = "$$ \\frac{\\sigma_{c,{"+ alpha_value +"},d}} {\\displaystyle {f_{c,{"+ alpha_value +"},d}}} = \\frac{" + sigmacAd_result.toFixed(2) + "} {\\displaystyle {" + fcAd_result.toFixed(2) + "}} ={" + sigmaCompare_result.toFixed(2) + "}$$";
 
 // Nośność na ścinanie
   latex_l1v_element.innerHTML = "$$ l_{1,v}={h_1*tg(\\alpha)} = {" + h1_value + "*tg(" + alpha_value + ")} = {"+ l1v_result.toFixed(2) + "} $$";
@@ -452,7 +457,7 @@ function update_latex() {
 
   latex_ntd_element.innerHTML ="$$ N_{t,d}= {N_{d}*cos(\\alpha)} = {"+nd_value+"*cos("+alpha_value+")} = {"+ ntd_result.toFixed(2) + "}  $$";
 
-  latex_h2_element.innerHTML ="$$ h_{2}= {h-s} = {"+h_value+"-"+h1_value+"} = {"+ h2_result.toFixed(2) + "}  $$";
+  latex_h2_element.innerHTML ="$$ h_{2}= {h-h_1} = {"+h_value+"-"+h1_value+"} = {"+ h2_result.toFixed(2) + "}  $$";
 
   latex_an1_element.innerHTML ="$$ A_{n'}= {h_{2}*(b-45mm)} = {"+h2_result.toFixed(2)+"*("+b_value+"-45)} = {"+ an1_result.toFixed(2) + "}  $$";
 
