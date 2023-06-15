@@ -43,7 +43,7 @@ function calc_condition1(nd, rk){
   return nd / rk;
 }
 function calc_r1d(r1_screw, kmod, ym){
-  return quantity2_value * r1_screw * kmod / ym;
+  return quantity2_value * r1_screw * 1000 * kmod / ym;
 }
 function calc_condition2(nd, r1d){
   return nd / r1d;
