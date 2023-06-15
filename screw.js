@@ -173,11 +173,11 @@ function update_latex() {
 
   latex_rk_element.innerHTML = "$$ R_{k}=\\frac{A_{eff}*R}{\\displaystyle{Y_{m}}} = \\frac{" + aeff_result + " * " + r_value +"}{\\displaystyle{" + 1.3 + "} } = {" + rk_result.toFixed(2) + "} $$";
  
-  latex_condition1_element.innerHTML = "$$ \\frac{N_{d}}{\\displaystyle{R_{k}}} = \\frac{" + nd_value + " }{\\displaystyle{" + rk_result + "} } = {" + condition1_result.toFixed(2) + "} $$";
+  latex_condition1_element.innerHTML = "$$ \\frac{N_{d}}{\\displaystyle{R_{k}}} = \\frac{" + nd_value + " }{\\displaystyle{" + rk_result.toFixed(2) + "} } = {" + condition1_result.toFixed(2) + "} < 1 $$";
  
   latex_r1d_element.innerHTML = "$$ R_{1,d}=\\frac{ 2 * {" + quantity_value +"} * R_{1} * k_{mod}}{\\displaystyle{Y_{m}}} = \\frac{ 2 * {" + quantity_value +"} * " + r1_value + " * " + kmod_value +"}{\\displaystyle{" + 1.3 + "} } = {" + r1d_result.toFixed(2) + "} $$";
  
-  latex_condition2_element.innerHTML = "$$ \\frac{N_{d}}{\\displaystyle{R_{1,d}}} = \\frac{" + nd_value + " }{\\displaystyle{" + r1d_result + "} } = {" + condition2_result.toFixed(2) + "} $$";
+  latex_condition2_element.innerHTML = "$$ \\frac{N_{d}}{\\displaystyle{R_{1,d}}} = \\frac{" + nd_value + " }{\\displaystyle{" + r1d_result.toFixed(2) + "} } = {" + condition2_result.toFixed(2) + "} < 1 $$";
 
   latex_a3c_element.innerHTML = "$$ a_{3,c}={{" + quantity2_value +"} * d} = { {" + quantity2_value +"} * " + d_value + " } = {" + a3c_result.toFixed(2) + "} $$";
 
@@ -192,6 +192,7 @@ function update_latex() {
   latex_a2_element.innerHTML = "$$ a_{2}={0.7 * {" + quantity_value +"} * d} = { 0.7 * {" + quantity_value +"} * " + d_value + " } = {" + a2_result.toFixed(2) + "} $$";
   
   latex_condition_literal_element.innerHTML = condition_literal;
+  latex_condition_literal1_element.innerHTML = condition_literal1;
 
   MathJax.typeset();
 }
